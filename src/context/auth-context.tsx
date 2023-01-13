@@ -2,7 +2,7 @@ import React from "react";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IUser, Role } from "../models/models";
-import { fakeAuth } from "../utils/helpers";
+import api from "../services/api";
 
 interface IAuthProvider {
   children: ReactNode;
@@ -11,14 +11,14 @@ interface IAuthProvider {
 interface IAuth {
   token: string;
   user: IUser | null;
-  onLogin: () => void;
+  onLogin: (email: string, password: string) => void;
   onLogout: () => void;
 }
 
 const INITIAL_VALUES: IAuth = {
   token: "",
   user: null,
-  onLogin: () => {},
+  onLogin: (email: string, password: string) => {},
   onLogout: () => {},
 };
 const AuthContext = createContext(INITIAL_VALUES);
@@ -27,24 +27,35 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(String(localStorage.getItem("token")));
   const [user, setUser] = useState<IUser | null>(null);
 
-  const handleLogin = async () => {
-    const token = await fakeAuth();
-    setToken(String(token));
-    setUser({
-      name: "marcus",
-      email: "marcus@gmail.com",
-      roles: [Role.User],
-    });
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const isAuthenticated = await api.post("/login", {
+        email,
+        password,
+      });
+      if (isAuthenticated && isAuthenticated.data) {
+        setToken(String(isAuthenticated.data.token));
+        localStorage.setItem("token", isAuthenticated.data.token);
+        setUser({
+          name: "marcus",
+          email: "marcus@gmail.com",
+          roles: [Role.User],
+        });
 
-    const origin = location.state?.from?.pathname || "/home";
-    navigate(origin);
+        const origin = location.state?.from?.pathname || "/home";
+        navigate(origin);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleLogout = () => {
     setToken("");
+    localStorage.setItem("token", "");
     setUser(null);
   };
 
