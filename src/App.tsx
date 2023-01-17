@@ -22,7 +22,7 @@ const App = () => {
             <Route
               path="/home"
               element={
-                <PrivateRoute permissions={[Role.Administrator, Role.User]}>
+                <PrivateRoute permissions={[Role.Admin, Role.User]}>
                   <Home />
                 </PrivateRoute>
               }

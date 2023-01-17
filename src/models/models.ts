@@ -1,9 +1,10 @@
 export enum Role {
-  User,
-  Administrator,
+  User = "USER",
+  Admin = "ADMIN",
 }
 
 export interface IUser {
+  token: string;
   name: string;
   email: string;
   roles: Role[];

@@ -1,4 +1,6 @@
 import Axios from "axios";
+import { COOKIE_NAME } from "../utils/constants";
+import { getCookie } from "../utils/helpers";
 
 const api = Axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}/`,
@@ -13,9 +15,11 @@ const api = Axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // TODO: Implement httpOnly
-    // @ts-ignore
-    config.headers["x-access-token"] = token;
+    const cookie = getCookie(COOKIE_NAME);
+    if (cookie) {
+      // @ts-ignore
+      config.headers["x-access-token"] = cookie.token;
+    }
 
     return config;
   },
