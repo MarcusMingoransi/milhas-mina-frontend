@@ -1,4 +1,6 @@
-export const fakeAuth = () =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve("2342f2f1d131rf12"), 250);
-  });
+import { Cookies } from "react-cookie";
+
+export const getCookie = (name: string) => {
+  const cookies = new Cookies();
+  return cookies.get(name) || null;
+};

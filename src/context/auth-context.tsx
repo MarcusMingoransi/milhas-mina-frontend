@@ -1,24 +1,23 @@
-import React from "react";
 import { createContext, ReactNode, useContext, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IUser, Role } from "../models/models";
-import { fakeAuth } from "../utils/helpers";
+import { IUser } from "../models/models";
+import api from "../services/api";
+import { COOKIE_NAME } from "../utils/constants";
 
 interface IAuthProvider {
   children: ReactNode;
 }
 
 interface IAuth {
-  token: string;
   user: IUser | null;
-  onLogin: () => void;
+  onLogin: (email: string, password: string) => void;
   onLogout: () => void;
 }
 
 const INITIAL_VALUES: IAuth = {
-  token: "",
   user: null,
-  onLogin: () => {},
+  onLogin: (email: string, password: string) => {},
   onLogout: () => {},
 };
 const AuthContext = createContext(INITIAL_VALUES);
@@ -27,31 +26,59 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState<IUser | null>(null);
+  const [cookies, setCookie] = useCookies([COOKIE_NAME]);
 
-  const handleLogin = async () => {
-    const token = await fakeAuth();
-    setToken(String(token));
-    setUser({
-      name: "marcus",
-      email: "marcus@gmail.com",
-      roles: [Role.User],
-    });
+  const [user, setUser] = useState<IUser | null>(
+    cookies && cookies.user
+      ? {
+          token: cookies.user.token,
+          name: `${cookies.user.first_name} ${cookies.user.last_name}`,
+          email: cookies.user.email,
+          roles: [cookies.user.role],
+        }
+      : null
+  );
 
-    const origin = location.state?.from?.pathname || "/home";
-    navigate(origin);
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const isAuthenticated = await api.post("/login", {
+        email,
+        password,
+      });
+      if (isAuthenticated && isAuthenticated.data) {
+        let expires = new Date();
+        expires.setTime(
+          expires.getTime() + isAuthenticated.data.expires_in * 1000
+        );
+        setCookie(COOKIE_NAME, isAuthenticated.data, {
+          path: "/",
+          expires,
+        });
+
+        const { token, first_name, last_name, email, role } =
+          isAuthenticated.data;
+        setUser({
+          token: token,
+          name: `${first_name} ${last_name}`,
+          email,
+          roles: [role],
+        });
+
+        const origin = location.state?.from?.pathname || "/home";
+        navigate(origin);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleLogout = () => {
-    setToken("");
     setUser(null);
   };
 
   return (
     <AuthContext.Provider
       value={{
-        token,
         user,
         onLogin: handleLogin,
         onLogout: handleLogout,

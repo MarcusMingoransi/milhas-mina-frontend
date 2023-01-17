@@ -12,7 +12,6 @@ const Loading = () => <p>Loading ...</p>;
 
 const App = () => {
   const { user } = useAuth();
-  console.log(user);
 
   return (
     <BrowserRouter>
@@ -23,7 +22,7 @@ const App = () => {
             <Route
               path="/home"
               element={
-                <PrivateRoute permissions={[Role.Administrator, Role.User]}>
+                <PrivateRoute permissions={[Role.Admin, Role.User]}>
                   <Home />
                 </PrivateRoute>
               }

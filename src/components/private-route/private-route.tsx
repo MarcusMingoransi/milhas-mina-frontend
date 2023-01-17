@@ -10,16 +10,16 @@ interface Props {
 }
 
 const PrivateRoute = ({ permissions, redirectPath, children }: Props) => {
-  const { token, user } = useAuth();
+  const { user } = useAuth();
   const location = useLocation();
 
-  const isAllowed = useMemo(
-    () =>
-      permissions.some((role) => (user ? user.roles.includes(role) : false)),
-    [user, permissions]
-  );
+  const isAllowed = useMemo(() => {
+    return permissions.some((role) => {
+      return user && user.roles ? user.roles.includes(role) : false;
+    });
+  }, [user, permissions]);
 
-  if (!token) {
+  if (!user?.token) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
   if (!isAllowed) {
