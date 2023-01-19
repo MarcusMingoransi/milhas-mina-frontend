@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/private-route";
+import { CustomThemeProvider } from "./components/theme/theme";
 import { AuthProvider, useAuth } from "./context/auth-context";
 import { Role } from "./models/models";
 
@@ -14,24 +15,26 @@ const App = () => {
   const { user } = useAuth();
 
   return (
-    <BrowserRouter>
-      <React.Suspense fallback={<Loading />}>
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route
-              path="/home"
-              element={
-                <PrivateRoute permissions={[Role.Admin, Role.User]}>
-                  <Home />
-                </PrivateRoute>
-              }
-            />
-            <Route path="*" element={<AccessDenied />} />
-          </Routes>
-        </AuthProvider>
-      </React.Suspense>
-    </BrowserRouter>
+    <CustomThemeProvider>
+      <BrowserRouter>
+        <React.Suspense fallback={<Loading />}>
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute permissions={[Role.Admin, Role.User]}>
+                    <Home />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="*" element={<AccessDenied />} />
+            </Routes>
+          </AuthProvider>
+        </React.Suspense>
+      </BrowserRouter>
+    </CustomThemeProvider>
   );
 };
 
