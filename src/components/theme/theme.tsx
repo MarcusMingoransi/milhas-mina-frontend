@@ -35,6 +35,23 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
           secondary: {
             main: Colors.secondary.main,
           },
+          background: {
+            default: Colors.background,
+          },
+        },
+        components: {
+          MuiTextField: {
+            defaultProps: {
+              InputProps: {
+                style: {
+                  borderRadius: "8px",
+                },
+              },
+            },
+          },
+          MuiButton: {
+            defaultProps: { style: { borderRadius: "8px", height: "48px" } },
+          },
         },
       }),
     [mode]
