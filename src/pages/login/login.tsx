@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useAuth } from "../../context/auth-context";
-import { Divider, Wrapper, WrapperLeft, WrapperRight } from "./styles";
-import { Input, Link } from "../../components/shared";
+import {
+  DescriptionText,
+  Divider,
+  LogoContent,
+  Wrapper,
+  WrapperLeft,
+  WrapperRight,
+} from "./styles";
+import { Image, Input, Link } from "../../components/shared";
+import Logo from "../../images/loginLogo.png";
 
 const Login = () => {
   const { onLogin } = useAuth();
@@ -12,7 +20,15 @@ const Login = () => {
     <Wrapper>
       <Grid container>
         <Grid item xs={7}>
-          <WrapperLeft></WrapperLeft>
+          <WrapperLeft>
+            <LogoContent>
+              <Image src={Logo} alt="Logo" width="450px" />
+              <DescriptionText>
+                A poucos clicks de começar a gerenciar e automatizar suas milhas
+                de uma maneira muito simples, rápida e intuitiva.
+              </DescriptionText>
+            </LogoContent>
+          </WrapperLeft>
         </Grid>
         <Grid item xs={5}>
           <WrapperRight>

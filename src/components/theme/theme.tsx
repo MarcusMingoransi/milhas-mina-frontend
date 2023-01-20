@@ -31,9 +31,11 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
           mode,
           primary: {
             main: Colors.primary.main,
+            contrastText: Colors.primary.constrast,
           },
           secondary: {
             main: Colors.secondary.main,
+            contrastText: Colors.primary.constrast,
           },
           background: {
             default: Colors.background,
