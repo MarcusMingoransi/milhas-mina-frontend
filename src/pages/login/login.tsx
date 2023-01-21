@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Typography,
+} from "@mui/material";
 import { useAuth } from "../../context/auth-context";
 import {
   DescriptionText,
@@ -8,14 +17,19 @@ import {
   Wrapper,
   WrapperLeft,
   WrapperRight,
-} from "./styles";
+} from "../../components/login-register/styles";
 import { Image, Input, Link } from "../../components/shared";
 import Logo from "../../images/loginLogo.png";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Login = () => {
   const { onLogin } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
   return (
     <Wrapper>
       <Grid container>
@@ -39,13 +53,28 @@ const Login = () => {
               variant="outlined"
               onChange={(e) => setEmail(e.currentTarget.value)}
             />
-            <Input
-              id="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.currentTarget.value)}
-            />
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="password"
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+                onChange={(e) => setPassword(e.currentTarget.value)}
+              />
+            </FormControl>
             <Button
               variant="contained"
               onClick={() => onLogin(email, password)}

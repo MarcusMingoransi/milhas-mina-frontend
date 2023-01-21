@@ -42,6 +42,14 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
           },
         },
         components: {
+          MuiInputBase: {
+            styleOverrides: {
+              root: {
+                borderRadius: "8px !important",
+                minWidth: '300px'
+              },
+            },
+          },
           MuiTextField: {
             defaultProps: {
               InputProps: {
