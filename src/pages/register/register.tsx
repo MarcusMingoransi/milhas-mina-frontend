@@ -28,9 +28,14 @@ const Login = () => {
   const { onLogin } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmationPassword, setConfirmationPassword] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmationPassword, setShowConfirmationPassword] =
+    React.useState(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleShowPassword = () => setShowPassword((show) => !show);
+  const handleShowConfirmationPassword = () =>
+    setShowConfirmationPassword((show) => !show);
   return (
     <Wrapper>
       <Grid container>
@@ -47,7 +52,7 @@ const Login = () => {
         </Grid>
         <Grid item xs={5}>
           <WrapperRight>
-            <Typography variant="h3">Login ✌️</Typography>
+            <Typography variant="h3">Cadastro 😎</Typography>
             <FormControl variant="outlined">
               <InputLabel htmlFor="email">Email</InputLabel>
               <OutlinedInput
@@ -71,7 +76,7 @@ const Login = () => {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
+                      onClick={handleShowPassword}
                       edge="end"
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -82,19 +87,44 @@ const Login = () => {
                 onChange={(e) => setPassword(e.currentTarget.value)}
               />
             </FormControl>
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="confirmation-password">
+                Confirmação Senha
+              </InputLabel>
+              <OutlinedInput
+                id="confirmation-password"
+                type={showConfirmationPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowConfirmationPassword}
+                      edge="end"
+                    >
+                      {showConfirmationPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Confirmação Senha"
+                onChange={(e) => setConfirmationPassword(e.currentTarget.value)}
+              />
+            </FormControl>
             <Button
               variant="contained"
               onClick={() => onLogin(email, password)}
             >
-              Login
+              Cadastrar
             </Button>
             <Divider />
             <Typography sx={{ textAlign: "center" }}>
-              Se ainda não se cadastrou, faça seu cadastro gratuitamente.
-              <br />
-              <Link to="/register">
+              Já possuí um cadastro?
+              <Link to="/login">
                 <Typography sx={{ fontFamily: "Poppins-Semibold" }}>
-                  Clique aqui para se cadastrar.
+                  Clique aqui para realizar o login.
                 </Typography>
               </Link>
             </Typography>

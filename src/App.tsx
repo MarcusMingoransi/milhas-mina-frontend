@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from "./context/auth-context";
 import { Role } from "./models/models";
 
 const Login = React.lazy(() => import("./pages/login"));
+const Register = React.lazy(() => import("./pages/register"));
 const Home = React.lazy(() => import("./pages/home"));
 const AccessDenied = React.lazy(() => import("./pages/access-denied"));
 
@@ -20,7 +21,8 @@ const App = () => {
         <React.Suspense fallback={<Loading />}>
           <AuthProvider>
             <Routes>
-              <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route
                 path="/home"
                 element={

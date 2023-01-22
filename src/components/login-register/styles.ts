@@ -34,6 +34,7 @@ export const Divider = styled("div")(({ theme }) => ({
 }));
 
 export const DescriptionText = styled(Typography)(({ theme }) => ({
+  fontFamily: 'Poppins-Semibold',
   fontSize: "24px",
   fontWeight: 600,
   textAlign: "center",

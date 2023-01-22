@@ -27,6 +27,12 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
   const theme = React.useMemo(
     () =>
       createTheme({
+        typography: {
+          fontFamily: [
+            'Poppins-Regular',
+            'Roboto',
+          ].join(','),
+        },
         palette: {
           mode,
           primary: {
