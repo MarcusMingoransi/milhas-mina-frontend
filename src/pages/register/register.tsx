@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Button,
   FormControl,
   Grid,
   IconButton,
@@ -9,6 +8,7 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   DescriptionText,
   Divider,
@@ -25,6 +25,11 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import { useToast } from "../../context/toast-context";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
+import {
+  PASSWORD_NOT_MATCHED,
+  SOMETHING_WENT_WRONG,
+} from "../../utils/constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,14 +40,30 @@ const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmationPassword, setShowConfirmationPassword] =
     React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const handleShowPassword = () => setShowPassword((show) => !show);
   const handleShowConfirmationPassword = () =>
     setShowConfirmationPassword((show) => !show);
 
   const handleRegister = () => {
-    showToast("Usuario criado com sucesso", "success");
-    navigate("/login");
+    if (password !== confirmationPassword)
+      return showToast(PASSWORD_NOT_MATCHED, "info");
+    setLoading(true);
+    api
+      .post("/register", {
+        email,
+        password,
+      })
+      .then((result) => {
+        showToast(result.data.message, "success");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error);
+        showToast(error.response.data.message || SOMETHING_WENT_WRONG, "error");
+      })
+      .finally(() => setLoading(false));
   };
   return (
     <Wrapper>
@@ -121,9 +142,15 @@ const Login = () => {
                 onChange={(e) => setConfirmationPassword(e.currentTarget.value)}
               />
             </FormControl>
-            <Button variant="contained" onClick={handleRegister}>
+            <LoadingButton
+              size="small"
+              onClick={handleRegister}
+              loading={loading}
+              variant="contained"
+              disabled={loading}
+            >
               Cadastrar
-            </Button>
+            </LoadingButton>
             <Divider />
             <Typography sx={{ textAlign: "center" }}>
               Já possuí um cadastro?

@@ -24,12 +24,24 @@ import Logo from "../../images/loginLogo.png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
+import { LoadingButton } from "@mui/lab";
+import { useToast } from "../../context/toast-context";
+import { INVALID_FIELDS } from "../../utils/constants";
 
 const Login = () => {
+  const { showToast } = useToast();
   const { onLogin } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleLogin = async () => {
+    if (!email || !password) return showToast(INVALID_FIELDS, "info");
+    setLoading(true);
+    await onLogin(email, password);
+    setLoading(false);
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   return (
@@ -83,12 +95,15 @@ const Login = () => {
                 onChange={(e) => setPassword(e.currentTarget.value)}
               />
             </FormControl>
-            <Button
+            <LoadingButton
+              size="small"
+              onClick={() => handleLogin()}
+              loading={loading}
               variant="contained"
-              onClick={() => onLogin(email, password)}
+              disabled={loading}
             >
               Login
-            </Button>
+            </LoadingButton>
             <Divider />
             <Typography sx={{ textAlign: "center" }}>
               Se ainda não se cadastrou, faça seu cadastro gratuitamente.

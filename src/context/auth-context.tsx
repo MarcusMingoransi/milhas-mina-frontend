@@ -3,7 +3,8 @@ import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IUser } from "../models/models";
 import api from "../services/api";
-import { COOKIE_NAME } from "../utils/constants";
+import { COOKIE_NAME, INVALID_EMAIL_PASSWORD } from "../utils/constants";
+import { useToast } from "./toast-context";
 
 interface IAuthProvider {
   children: ReactNode;
@@ -11,13 +12,13 @@ interface IAuthProvider {
 
 interface IAuth {
   user: IUser | null;
-  onLogin: (email: string, password: string) => void;
+  onLogin: (email: string, password: string) => Promise<void>;
   onLogout: () => void;
 }
 
 const INITIAL_VALUES: IAuth = {
   user: null,
-  onLogin: (email: string, password: string) => {},
+  onLogin: async (email: string, password: string) => {},
   onLogout: () => {},
 };
 const AuthContext = createContext(INITIAL_VALUES);
@@ -25,6 +26,7 @@ const AuthContext = createContext(INITIAL_VALUES);
 export const AuthProvider = ({ children }: IAuthProvider) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { showToast } = useToast();
 
   const [cookies, setCookie] = useCookies([COOKIE_NAME]);
 
@@ -69,6 +71,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
       }
     } catch (error) {
       console.log(error);
+      showToast(INVALID_EMAIL_PASSWORD, "error");
     }
   };
 
