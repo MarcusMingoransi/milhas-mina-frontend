@@ -9,10 +9,10 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import { useAuth } from "../../context/auth-context";
 import {
   DescriptionText,
   Divider,
+  LinkStyled,
   LogoContent,
   Wrapper,
   WrapperLeft,
@@ -23,9 +23,12 @@ import Logo from "../../images/loginLogo.png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
+import { useToast } from "../../context/toast-context";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { onLogin } = useAuth();
+  const navigate = useNavigate();
+  const { showToast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmationPassword, setConfirmationPassword] = useState("");
@@ -36,6 +39,11 @@ const Login = () => {
   const handleShowPassword = () => setShowPassword((show) => !show);
   const handleShowConfirmationPassword = () =>
     setShowConfirmationPassword((show) => !show);
+
+  const handleRegister = () => {
+    showToast("Usuario criado com sucesso", "success");
+    navigate("/login");
+  };
   return (
     <Wrapper>
       <Grid container>
@@ -113,19 +121,14 @@ const Login = () => {
                 onChange={(e) => setConfirmationPassword(e.currentTarget.value)}
               />
             </FormControl>
-            <Button
-              variant="contained"
-              onClick={() => onLogin(email, password)}
-            >
+            <Button variant="contained" onClick={handleRegister}>
               Cadastrar
             </Button>
             <Divider />
             <Typography sx={{ textAlign: "center" }}>
               Já possuí um cadastro?
               <Link to="/login">
-                <Typography sx={{ fontFamily: "Poppins-Semibold" }}>
-                  Clique aqui para realizar o login.
-                </Typography>
+                <LinkStyled> Clique aqui para realizar o login.</LinkStyled>
               </Link>
             </Typography>
           </WrapperRight>

@@ -34,7 +34,7 @@ export const Divider = styled("div")(({ theme }) => ({
 }));
 
 export const DescriptionText = styled(Typography)(({ theme }) => ({
-  fontFamily: 'Poppins-Semibold',
+  fontFamily: "Poppins-Semibold",
   fontSize: "24px",
   fontWeight: 600,
   textAlign: "center",
@@ -48,4 +48,8 @@ export const LogoContent = styled("div")(({ theme }) => ({
   alignItems: "center",
   gap: "90px",
   padding: "60px",
+}));
+
+export const LinkStyled = styled("span")(({ theme }) => ({
+  fontFamily: "Poppins-Semibold",
 }));

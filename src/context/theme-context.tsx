@@ -1,6 +1,6 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import React, { createContext, ReactNode, useContext } from "react";
-import { Colors } from "./colors";
+import { Colors } from "../components/theme/colors";
 
 interface IThemeProvider {
   children: ReactNode;
@@ -28,10 +28,7 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
     () =>
       createTheme({
         typography: {
-          fontFamily: [
-            'Poppins-Regular',
-            'Roboto',
-          ].join(','),
+          fontFamily: ["Poppins-Regular", "Roboto"].join(","),
         },
         palette: {
           mode,
@@ -52,7 +49,7 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
             styleOverrides: {
               root: {
                 borderRadius: "8px !important",
-                minWidth: '300px'
+                minWidth: "300px",
               },
             },
           },
@@ -66,7 +63,9 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
             },
           },
           MuiButton: {
-            defaultProps: { style: { borderRadius: "8px", height: "48px" } },
+            defaultProps: {
+              style: { borderRadius: "8px", height: "56px", maxHeight: "100%" },
+            },
           },
         },
       }),

@@ -13,6 +13,7 @@ import { useAuth } from "../../context/auth-context";
 import {
   DescriptionText,
   Divider,
+  LinkStyled,
   LogoContent,
   Wrapper,
   WrapperLeft,
@@ -93,9 +94,7 @@ const Login = () => {
               Se ainda não se cadastrou, faça seu cadastro gratuitamente.
               <br />
               <Link to="/register">
-                <Typography sx={{ fontFamily: "Poppins-Semibold" }}>
-                  Clique aqui para se cadastrar.
-                </Typography>
+                <LinkStyled>Clique aqui para se cadastrar.</LinkStyled>
               </Link>
             </Typography>
           </WrapperRight>
