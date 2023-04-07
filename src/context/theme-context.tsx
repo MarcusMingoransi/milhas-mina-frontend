@@ -43,6 +43,11 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
           background: {
             default: Colors.background,
           },
+          text: {
+            primary: Colors.text.black,
+            secondary: Colors.text.white,
+            disabled: Colors.text.disabled,
+          },
         },
         components: {
           MuiInputBase: {

@@ -4,8 +4,8 @@ export enum Role {
 }
 
 export interface IUser {
-  token: string;
+  token?: string;
   name: string;
   email: string;
-  roles: Role[];
+  roles?: Role[];
 }
