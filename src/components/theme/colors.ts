@@ -12,4 +12,9 @@ export const Colors = {
     constrast: "#ffffff",
   },
   background: "#F1F1F1",
+  text: {
+    white: "#ffffff",
+    black: "#000000",
+    disabled: "#818181",
+  },
 };

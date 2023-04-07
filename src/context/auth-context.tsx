@@ -1,9 +1,11 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
+import { SideMenu } from "../components/shared";
 import { IUser } from "../models/models";
 import api from "../services/api";
 import { COOKIE_NAME, INVALID_EMAIL_PASSWORD } from "../utils/constants";
+import { clearCookie } from "../utils/helpers";
 import { useToast } from "./toast-context";
 
 interface IAuthProvider {
@@ -77,6 +79,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   const handleLogout = () => {
     setUser(null);
+    clearCookie(COOKIE_NAME);
   };
 
   return (
@@ -87,6 +90,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         onLogout: handleLogout,
       }}
     >
+      {user && <SideMenu />}
       {children}
     </AuthContext.Provider>
   );

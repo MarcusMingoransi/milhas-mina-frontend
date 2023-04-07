@@ -20,7 +20,7 @@ const PrivateRoute = ({ permissions, redirectPath, children }: Props) => {
   }, [user, permissions]);
 
   if (!user?.token) {
-    return <Navigate to="/" replace state={{ from: location }} />;
+    return <Navigate to={redirectPath || "/"} />;
   }
   if (!isAllowed) {
     return (
