@@ -6,7 +6,6 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -33,7 +32,7 @@ interface Props {
   window?: () => Window;
 }
 
-export default function SideMenu(props: Props) {
+const SideMenu = (props: Props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [tab, setTab] = React.useState(0);
@@ -156,4 +155,6 @@ export default function SideMenu(props: Props) {
       </Box>
     </Box>
   );
-}
+};
+
+export default SideMenu;

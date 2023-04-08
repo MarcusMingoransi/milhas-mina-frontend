@@ -27,6 +27,7 @@ import { useToast } from "../../context/toast-context";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import {
+  LOGIN_PAGE,
   PASSWORD_NOT_MATCHED,
   SOMETHING_WENT_WRONG,
 } from "../../utils/constants";
@@ -57,7 +58,7 @@ const Login = () => {
       })
       .then((result) => {
         showToast(result.data.message, "success");
-        navigate("/login");
+        navigate(LOGIN_PAGE);
       })
       .catch((error) => {
         console.log(error);
@@ -154,7 +155,7 @@ const Login = () => {
             <Divider />
             <Typography sx={{ textAlign: "center" }}>
               Já possuí um cadastro?
-              <Link to="/login">
+              <Link to={LOGIN_PAGE}>
                 <LinkStyled> Clique aqui para realizar o login.</LinkStyled>
               </Link>
             </Typography>
