@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Theme, ThemeProvider, createTheme } from "@mui/material/styles";
 import React, { createContext, ReactNode, useContext } from "react";
 import { Colors } from "../components/theme/colors";
 
@@ -7,6 +7,7 @@ interface IThemeProvider {
 }
 
 interface ITheme {
+  theme?: Theme;
   mode: string;
   toggleColorMode: () => void;
 }
@@ -35,6 +36,8 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
           primary: {
             main: Colors.primary.main,
             contrastText: Colors.primary.constrast,
+            light: Colors.primary.constrast,
+            dark: Colors.primary.dark,
           },
           secondary: {
             main: Colors.secondary.main,
@@ -80,6 +83,7 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
   return (
     <CustomThemeContext.Provider
       value={{
+        theme,
         mode: mode,
         toggleColorMode: switchColorMode,
       }}

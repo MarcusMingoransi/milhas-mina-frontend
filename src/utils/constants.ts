@@ -10,4 +10,4 @@ export const SOMETHING_WENT_WRONG = "Algo deu errado!";
 
 export const LOGIN_PAGE = "/";
 export const REGISTER_PAGE = "/register";
-export const HOME_PAGE = "/home";
+export const ALL_ACCOR_PAGE = "/all-accor";

@@ -3,7 +3,11 @@ import { useCookies } from "react-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IUser } from "../models/models";
 import api from "../services/api";
-import { COOKIE_NAME, INVALID_EMAIL_PASSWORD } from "../utils/constants";
+import {
+  ALL_ACCOR_PAGE,
+  COOKIE_NAME,
+  INVALID_EMAIL_PASSWORD,
+} from "../utils/constants";
 import { clearCookie } from "../utils/helpers";
 import { useToast } from "./toast-context";
 
@@ -67,7 +71,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
           roles: [role],
         });
 
-        const origin = location.state?.from?.pathname || "/home";
+        const origin = location.state?.from?.pathname || ALL_ACCOR_PAGE;
         navigate(origin);
       }
     } catch (error) {
