@@ -13,6 +13,7 @@ import { useAuth } from "../../context/auth-context";
 import {
   DescriptionText,
   Divider,
+  FormControlStyled,
   LinkStyled,
   LogoContent,
   Wrapper,
@@ -61,7 +62,7 @@ const Login = () => {
         <Grid item xs={5}>
           <WrapperRight>
             <Typography variant="h3">Login ✌️</Typography>
-            <FormControl variant="outlined">
+            <FormControlStyled variant="outlined">
               <InputLabel htmlFor="email">Email</InputLabel>
               <OutlinedInput
                 id="email"
@@ -74,8 +75,8 @@ const Login = () => {
                 label="Email"
                 onChange={(e) => setEmail(e.currentTarget.value)}
               />
-            </FormControl>
-            <FormControl variant="outlined">
+            </FormControlStyled>
+            <FormControlStyled variant="outlined">
               <InputLabel htmlFor="password">Senha</InputLabel>
               <OutlinedInput
                 id="password"
@@ -94,7 +95,7 @@ const Login = () => {
                 label="Senha"
                 onChange={(e) => setPassword(e.currentTarget.value)}
               />
-            </FormControl>
+            </FormControlStyled>
             <LoadingButton
               size="small"
               onClick={() => handleLogin()}

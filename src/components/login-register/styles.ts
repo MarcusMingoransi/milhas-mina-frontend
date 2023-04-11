@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { FormControl, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const Wrapper = styled("div")(({ theme }) => ({
@@ -52,4 +52,9 @@ export const LogoContent = styled("div")(({ theme }) => ({
 
 export const LinkStyled = styled("span")(({ theme }) => ({
   fontFamily: "Poppins-Semibold",
+}));
+
+export const FormControlStyled = styled(FormControl)(({ theme }) => ({
+  width: "300px",
+  maxWidth: "100%",
 }));

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Box, Container, List, ListItem, ListItemText } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import api from "../../services/api";
-import Card from "../../components/shared/card/card";
 import { useCustomTheme } from "../../context/theme-context";
+import { Card } from "../../components/shared";
+import { AllAccorSimulator } from "../../components/all-accor";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -36,10 +37,10 @@ const Home = () => {
         ))}
       </List> */}
       <Grid xs={12} lg={6}>
-        <Card>ahahhahahah</Card>
+        <Card backgroundColor={theme?.palette.primary.main}>ahahhahahah</Card>
       </Grid>
       <Grid xs={12} lg={6}>
-        <Card backgroundColor={theme?.palette.primary.main}>ahahhahahah</Card>
+        <AllAccorSimulator />
       </Grid>
       <Grid xs={12} lg={12}>
         <Card borderColor={theme?.palette.primary.main}>ahahhahahah</Card>

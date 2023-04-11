@@ -53,11 +53,17 @@ export const CustomThemeProvider = ({ children }: IThemeProvider) => {
           },
         },
         components: {
+          MuiInputLabel: {
+            styleOverrides: {
+              outlined: {
+                color: Colors.text.disabled,
+              },
+            },
+          },
           MuiInputBase: {
             styleOverrides: {
               root: {
                 borderRadius: "8px !important",
-                minWidth: "300px",
               },
             },
           },

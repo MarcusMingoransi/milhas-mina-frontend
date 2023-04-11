@@ -11,3 +11,8 @@ export const SOMETHING_WENT_WRONG = "Algo deu errado!";
 export const LOGIN_PAGE = "/";
 export const REGISTER_PAGE = "/register";
 export const ALL_ACCOR_PAGE = "/all-accor";
+
+export const FORM_REQUIRED_FIELD = "Campo obrigatório";
+export const FORM_MIN_POSITIVE_VALUE = "Valor precisa ser maior ou igual a 0";
+
+export const CURRENCY_EURO_URL = "/currency-euro";
